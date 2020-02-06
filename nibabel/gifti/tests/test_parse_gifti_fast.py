@@ -368,7 +368,7 @@ def test_parse_deprecated():
         warnings.filterwarnings('always', category=DeprecationWarning)
         op = Outputter()
         assert len(w) == 1
-        op.initialize()  # smoke test--no error.
+        op.initialize()
 
     with clear_and_catch_warnings() as w:
         warnings.filterwarnings('always', category=DeprecationWarning)
