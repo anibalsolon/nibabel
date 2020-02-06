@@ -19,6 +19,7 @@ from ..parse_gifti_fast import Outputter, parse_gifti_file
 from ...loadsave import load, save
 from ...nifti1 import xform_codes
 from ...tmpdirs import InTemporaryDirectory
+from ...deprecator import ExpiredDeprecationError
 
 from numpy.testing import assert_array_almost_equal
 
@@ -330,17 +331,13 @@ def test_load_labeltable():
 def test_labeltable_deprecations():
     img = load(DATA_FILE6)
     lt = img.labeltable
-
-    # Test deprecation
-    with clear_and_catch_warnings() as w:
-        warnings.filterwarnings('always', category=DeprecationWarning)
+    
+    with pytest.warns(DeprecationWarning):
         assert lt == img.get_labeltable()
-        assert len(w) == 1
 
-    with clear_and_catch_warnings() as w:
-        warnings.filterwarnings('always', category=DeprecationWarning)
+    with pytest.warns(DeprecationWarning):
         img.set_labeltable(lt)
-        assert len(w) == 1
+
     assert lt == img.labeltable
 
 
